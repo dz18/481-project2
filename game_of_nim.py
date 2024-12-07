@@ -69,9 +69,10 @@ class GameOfNim(Game):
         print("board: ", board)
         print("Current Turn: ", next)
 
+
 if __name__ == "__main__":
 
-    nim = GameOfNim(board=[0, 5, 3, 1]) # Creating the game instance
+    nim = GameOfNim(board=[11,9,7,5,3,1]) # Creating the game instance
 
     # nim = GameOfNim(board=[7, 5, 3, 1]) # a much larger tree to search
     # print(nim.initial.board) # must be [0, 5, 3, 1]
