@@ -3,73 +3,72 @@ import tkinter as tk
 from tkinter import messagebox
 
 class GameOfNim(Game):
+
     """Play Game of Nim with first player 'MAX'.
     A state has the player to move, a cached utility, a list of moves in
     the form of a list of (x, y) positions, and a board, in the form of
-    a list with the number of objects in each row.
-    """
+    a list with number of objects in each row."""
 
     def __init__(self, board):
-        """Initialize the Game of Nim with the given board."""
+        """ Init. Game of Nim Elements """
         self.board = board
-        moves = [(x, y) for x in range(len(board)) for y in range(1, board[x] + 1)]
-        self.initial = GameState(
-            board=board, moves=moves, utility=0, to_move="MAX"
-        )
-
+        moves = [(x, y) for x in range(len(board))
+                for y in range(1, board[x] + 1)]
+        self.initial = GameState(board=board, moves=moves, utility=0, to_move="MAX")
+    
     def actions(self, state):
-        """Return the list of legal moves for the current state."""
-        if state is None:  # Handle the case where no state is passed
-            state = self.initial  # Use the initial state if not provided
-
-        # Ensure 'state' has a 'moves' attribute
-        if hasattr(state, "moves") and state.moves:
-            return state.moves
-        else:
-            # Generate legal moves based on the current board
-            moves = [
-                (x, y)
-                for x in range(len(self.board))
-                for y in range(1, self.board[x] + 1)
-            ]
-            return moves
-
+        """Legal moves are at least one object, all from the same row."""
+        return state.moves
+    
     def result(self, state, move):
-        """Return the new state reached from the given state and the given move."""
+        """ Returns the new state reached from the given state and the given move """
         if move not in state.moves:
             return state
-
+        
         row = move[0]
         n = move[1]
         board = state.board.copy()
         board[row] -= n
 
-        moves = [
-            (x, y) for x in range(len(board)) for y in range(1, board[x] + 1)
-        ]
+        moves = [(x, y) for x in range(len(board))
+                for y in range(1, board[x] + 1)]
 
-        next_player = "MIN" if state.to_move == "MAX" else "MAX"
+        next_player = ('MIN' if state.to_move == 'MAX' else 'MAX')
         return GameState(
             to_move=next_player,
             utility=self.utility(state, state.to_move),
-            board=board,
-            moves=moves,
+            board=board, 
+            moves=moves
         )
-
+    
     def utility(self, state, player):
-        """Return +1 if MAX wins, -1 if MIN wins."""
-        if self.terminal_test(state):
-            return 1 if state.to_move == "MIN" else -1
-        return 0  # Game continues
+        """ Return +1 if Max wins, -1 if Min wins"""
 
+        if self.terminal_test(state):
+            if state.to_move == 'MAX':
+                return 1
+            else:  
+                return -1
+            # return 1 if state.to_move == "MAX"  else -1
+            
+        return 0 # Game Continues
+    
     def terminal_test(self, state):
-        """Return True if the given state represents the end of the game."""
-        return all(i == 0 for i in state.board)
+        """ Returns true if given state represents end of a game """
+        result = True
+        for i in state.board:
+            if i != 0:
+                result = False
+        
+        return result
+    
 
     def display(self, state):
-        """Display the Game of Nim board."""
-        print("board:", state.board)
-        print("Current Turn:", state.to_move)
+        """ Display Game of Nim Board """
+        board = state.board
+        next = state.to_move
+        print("board: ", board)
+        print("Current Turn: ", next)
 
 class NimGUI:
     def __init__(self):
@@ -123,13 +122,14 @@ class NimGUI:
 
             self.create_game_elements()
             self.update_board()
+            self.ai_move()
 
         except ValueError as e:
             messagebox.showerror("Invalid Input", str(e))
 
     def create_game_elements(self):
         """Create elements for the game interface."""
-        self.status_label = tk.Label(self.root, text="Player's Turn: MAX", font=("Arial", 14))
+        self.status_label = tk.Label(self.root, text="Your Turn", font=("Arial", 14))
         self.status_label.pack(pady=10)
 
         self.pile_label = tk.Label(self.controls_frame, text="Pile:", font=("Arial", 12))
@@ -160,7 +160,7 @@ class NimGUI:
             pile, stone = move 
             move_label = tk.Label(
                 self.board_frame,
-                text=f"{'AI' if self.state.to_move == 'MAX' else 'Player'} removed {stone} stone(s) from Pile {pile + 1}.",
+                text=f"{'AI' if self.state.to_move == 'MIN' else 'Player'} removed {stone} stone(s) from Pile {pile + 1}.",
                 font=("Arial", 12),
                 fg="blue",
             )
@@ -191,7 +191,6 @@ class NimGUI:
 
     def ai_move(self):
         """Handle the AI's move."""
-        self.status_label.config(text="AI's Turn: MIN")
         self.root.update_idletasks()
 
         move = alpha_beta_player(self.game, self.state)
@@ -203,13 +202,13 @@ class NimGUI:
     def check_game_end(self):
         """Check if the game has ended and display the winner."""
         if self.game.terminal_test(self.state):
-            winner = "AI" if self.state.to_move == "MIN" else "You"
+            winner = "AI" if self.state.to_move == "MAX" else "You"
             messagebox.showinfo("Game Over", f"{winner} wins!")
             self.root.quit()
 
         else:
             current_turn = "MAX" if self.state.to_move == "MAX" else "MIN"
-            self.status_label.config(text=f"Player's Turn: {current_turn}")
+            self.status_label.config(text=f"Your Turn")
 
     def run(self):
         """Run the Tkinter main loop."""
@@ -221,7 +220,7 @@ if __name__ == "__main__":
 
 # if __name__ == "__main__":
 #     # Create an instance of the Game of Nim with a predefined board
-#     nim = GameOfNim(board=[11, 9, 7, 5, 3, 1])  # Custom board
+#     nim = GameOfNim(board=[7, 5, 3, 1])  # Custom board
 
 #     # Display the initial board
 #     print("Initial board:", nim.initial.board)
