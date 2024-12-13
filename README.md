@@ -1,6 +1,12 @@
+# Fall 2024 CPSC 481 Project - Game of Nim AI Using Nim-Sum
+
+## Group Members
+
+Dylan Zuniga, Elizabeth Steubs, Kelvin Nguyen
+
 ## About the Project
 
-Description here
+This project implements an intelligent AI system for playing the Game of Nim, featuring a graphical user interface and advanced decision-making capabilities. The AI uses alpha-beta pruning enhanced with Nim-Sum evaluation to make optimal moves efficiently.
 
 ### Built with
 
@@ -24,13 +30,6 @@ This is the main file you will run to play the game. Comment out the other versi
 
 * [Wikipedia - Game of Nim](https://en.wikipedia.org/wiki/Nim)
 * [Nim-Sum evaluation function](https://www.geeksforgeeks.org/combinatorial-game-theory-set-2-game-nim/)
-
-## Getting started
-
-### Prerequisities 
-
-### Installation
-
 
 [Python.org]: https://img.shields.io/badge/Python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [Python-url]: https://www.python.org/
