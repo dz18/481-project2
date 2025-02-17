@@ -1,6 +1,6 @@
-# Fall 2024 CPSC 481 Project - Game of Nim AI Using Nim-Sum
+# Game of Nim AI Using Nim-Sum
 
-## Group Members
+## Contributers
 
 Dylan Zuniga, Elizabeth Steubs, Kelvin Nguyen
 
@@ -10,9 +10,12 @@ This project implements an intelligent AI system for playing the Game of Nim, fe
 
 ### Built with
 
-* [![Python][Python.org]][Python-url]
+[![Python][Python.org]][Python-url]
+
+### Files
 
 `game_of_nim.py` <br/>
+
 This is the main file you will run to play the game. Comment out the other version of main that wont be in use
 
 
@@ -24,7 +27,7 @@ This is the main file you will run to play the game. Comment out the other versi
 
 `games.py` <br/>
 
-`utils.py` <br/>
+This file stores all the necessary object classes for the game AI to run. It includes the structure of the games and the games AI.
 
 ### Sources
 
