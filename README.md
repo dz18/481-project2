@@ -20,9 +20,11 @@ This is the main file you will run to play the game. Comment out the other versi
 
 
 * To play terminal version, you will use this version of main
+
 ![alt text](assets/terminal.png)
 
 * To play the GUI version, you will use this version of main
+
 ![alt text](assets/gui.png)
 
 `games.py` <br/>
